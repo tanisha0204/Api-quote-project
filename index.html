@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" 
+    integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Quote Live server</title>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="inner">
+            <div class="box">
+            <p class="number">
+                <img
+                 src="images/whtasapp.jpg" 
+                 alt="whatsappme" 
+                 title ="wapme"  
+                 id="whatsappme"
+                 />
+            </p>
+            <div class="text">
+                <i class="start-quote fas fa-quote-left"></i>
+                <p id="quotes" class="quotes"></p>
+                <p id="author" class="author"></p>
+
+
+            </div>
+<label class="button">
+    <p  id="NewQ">New Quotes</p>
+</label>
+        </div>
+    </div>
+</div>
+    <script>
+        const quotes=document.getElementById("quotes");
+        const author=document.getElementById("author");
+        const NewQ=document.getElementById("NewQ");
+        const whatsappme=document.getElementById("whatsappme");
+let realData="";
+let quotesData="";
+const whatsappnow=()=>{
+   let whatsapptxt=`https://wa.me/7992317147/text=${quotesData.text}`;
+   window.open(whatsapptxt);
+}
+        
+        const getNewQuotes=() =>{
+            let rnum= Math.floor(Math.random() * 10);
+            quotesData=realData[rnum];
+            quotes.innerText=`${quotesData.text}`;
+            quotesData.author==null
+            ? (author.innerText="Unknown")
+            : (author.innerText=`${quotesData.auhtor}`);
+
+            author.innerText=`${quotesData.author}`;
+
+        };
+        const getQuotes=async () =>{
+            const api="https://type.fit/api/quotes";
+            try{
+                let data=await fetch(api);
+                realData= await data.json();
+                getNewQuotes();
+               // console.log(realData[10].text);
+                //console.log(realData[10].author);
+
+            }catch(error){}
+        };
+        whatsappme.addEventListener("click",whatsappnow);
+      NewQ.addEventListener("click",getNewQuotes);
+      getQuotes();
+     </script>
+</body>
+</html>
